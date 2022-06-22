@@ -1,0 +1,35 @@
+server:
+  port: 6000
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: jsonplaceholde
+        uri: https://jsonplaceholder.typicode.com
+        predicates:
+        - Path=/json/todos/**
+        filters:
+        - RewritePath=/json, /
+      - id: reqres
+        uri: https://reqres.in
+        predicates:
+        - Path=/regres/api/**
+        filters:
+        - RewritePath=/regres, /
+      - id: httpbin
+        uri: http://httpbin.org
+        predicates:
+        - Path=/httpbin/get/**
+        filters:
+        - RewritePath=/httpbin, /
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - OPTION
+
